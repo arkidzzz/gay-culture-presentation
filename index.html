@@ -221,71 +221,79 @@
         }
 
         /* ===========================================
-           MOBILE RESPONSIVE (EXTREME SQUEEZE)
+           MOBILE RESPONSIVE (NATURAL & FULL)
            =========================================== */
         @media (max-width: 768px) {
             :root {
-                --slide-padding: 0.75rem;
+                --slide-padding: 1.2rem;
             }
+            .nav-dots { display: none !important; } /* Hide dots to clear space */
+            
             .slide {
-                overflow: hidden; /* Lock scroll strictly */
+                overflow: hidden;
             }
             .slide-content {
-                padding: 0.5rem;
-                justify-content: center;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
+                padding: 1.5rem 1rem;
+                justify-content: flex-start; /* Start from top but distributed */
+                height: 100dvh;
             }
             .title-main { font-size: 1.8rem; text-align: center; margin-bottom: 0.5rem; }
-            .section-title { font-size: 1.2rem; margin-bottom: 0.5rem; justify-content: center; }
+            .section-title { font-size: 1.3rem; margin-bottom: 1.5rem; justify-content: center; }
             .section-title::after { display: none; }
 
             .grid-container {
                 display: flex !important;
                 flex-direction: column;
-                gap: 0.4rem !important;
-                align-items: center;
-                flex: 1; /* Occupy remaining space */
-                justify-content: center;
+                gap: 0.7rem !important;
+                flex: 1;
+                justify-content: space-between;
+                padding-bottom: 1rem;
             }
 
             .card {
-                padding: 0.5rem 0.8rem;
-                width: 95%;
-                max-width: 320px;
-                display: flex;
-                flex-direction: row; /* Horizontal cards on mobile to save height */
-                align-items: center;
-                gap: 0.8rem;
-                border-width: 1px;
-            }
-            .card img {
-                width: 60px !important; /* Tiny images to save vertical space */
-                height: 60px !important;
-                margin-bottom: 0;
-                border-radius: 50%; /* Circle looks cleaner when small */
-                flex-shrink: 0;
-            }
-            .card h3 { font-size: 0.95rem; margin-bottom: 0.1rem; }
-            .card p { font-size: 0.7rem; line-height: 1.2; }
-            
-            .badge { font-size: 0.6rem; padding: 0.1rem 0.3rem; margin-bottom: 0.3rem; }
-            
-            /* Center the Intro slide specially */
-            #slide-2 .card { flex-direction: column; text-align: center; }
-            #slide-2 .card p { font-size: 1rem; }
-
-            /* Roles slide needs to be very compact */
-            #slide-5 .grid-container { gap: 0.3rem !important; }
-            
-            /* Daddy slide already horizontal, keep it and adjust */
-            #slide-6 .card {
                 padding: 0.8rem;
+                width: 100%;
+                max-width: 100%;
+                display: flex;
+                flex-direction: column; /* Back to vertical for natural look */
+                align-items: center;
+                text-align: center;
+                height: 25vh; /* Adaptive height to fit 3 cards */
+                justify-content: center;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .card img {
+                width: auto !important;
+                height: 12vh !important; /* Scale image based on viewport */
+                max-height: 80px;
+                margin-bottom: 0.5rem;
+                border-radius: 6px;
+                object-fit: contain;
+                border: none;
+                background: transparent;
+                box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
+            }
+
+            .card h3 { font-size: 1.1rem; margin-bottom: 0.2rem; color: var(--accent-cyan); }
+            .card p { font-size: 0.75rem; line-height: 1.3; color: var(--text-secondary); }
+            
+            .badge { font-size: 0.65rem; padding: 0.2rem 0.5rem; margin-bottom: 0.5rem; }
+
+            /* Intro slide specific */
+            #slide-2 .card { height: auto; padding: 2rem 1rem; }
+            
+            /* Daddy slide adjustment */
+            #slide-6 .card {
+                height: auto;
+                min-height: 40vh;
+                padding: 1.5rem;
             }
             #slide-6 .card img {
-                width: 80px !important;
-                height: 100px !important;
+                height: 25vh !important;
+                max-height: 250px;
+                width: 100% !important;
             }
         }
         /* ===========================================
