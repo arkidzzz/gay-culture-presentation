@@ -55,7 +55,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            overflow: hidden;
+            overflow-y: auto;
             scroll-snap-align: start;
             display: flex;
             flex-direction: column;
@@ -270,8 +270,36 @@
 
         /* Mobile Styles */
         @media (max-width: 768px) {
-            .grid-container { grid-template-columns: 1fr; }
+            :root {
+                --slide-padding: 1.5rem;
+            }
+            .title-main { font-size: 2.5rem; margin-top: 2rem; }
+            .section-title { font-size: 1.8rem; flex-wrap: wrap; }
+            .grid-container { 
+                grid-template-columns: 1fr !important; 
+                gap: 1.5rem;
+            }
+            .card { padding: 1.25rem; }
+            .card img { height: 220px !important; }
             .nav-dots { display: none; }
+            
+            /* Specific fix for personality slide grid */
+            #slide-4 .grid-container {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            /* Specific fix for daddy slide layout */
+            #slide-6 .card {
+                flex-direction: column !important;
+                text-align: center;
+                padding: 1rem;
+            }
+            #slide-6 .card img {
+                width: 100% !important;
+                height: 300px !important;
+                margin-bottom: 1rem;
+            }
         }
         /* ===========================================
            PRINT STYLES (For PDF Generation)
@@ -479,6 +507,7 @@
                 this.setupObserver();
                 this.setupNav();
                 this.setupWheelNav();
+                this.setupTouchNav();
                 this.handleScroll();
             }
 
@@ -546,6 +575,36 @@
                         }, 800);
                     }
                 }, { passive: false });
+            }
+
+            setupTouchNav() {
+                let touchStartY = 0;
+                let touchEndY = 0;
+
+                window.addEventListener('touchstart', (e) => {
+                    touchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+
+                window.addEventListener('touchend', (e) => {
+                    touchEndY = e.changedTouches[0].screenY;
+                    this.handleSwipe();
+                }, { passive: true });
+
+                this.handleSwipe = () => {
+                    const swipeDistance = touchStartY - touchEndY;
+                    const threshold = 50; // Minimum distance to be considered a swipe
+
+                    if (this.isScrolling) return;
+
+                    if (Math.abs(swipeDistance) > threshold) {
+                        this.isScrolling = true;
+                        this.navigate(swipeDistance > 0 ? 1 : -1);
+
+                        setTimeout(() => {
+                            this.isScrolling = false;
+                        }, 800);
+                    }
+                };
             }
 
             navigate(dir) {
