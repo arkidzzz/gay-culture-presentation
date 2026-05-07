@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bold Signal Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            --card-bg: #FF5722;
+            --text-primary: #ffffff;
+            --text-on-card: #1a1a1a;
+            --title-size: clamp(2.5rem, 8vw, 5rem);
+            --body-size: clamp(1rem, 2vw, 1.5rem);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 5vw;
+            position: relative;
+        }
+        .number {
+            position: absolute;
+            top: 5vw;
+            left: 5vw;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            opacity: 0.1;
+            line-height: 1;
+        }
+        .card {
+            background: var(--card-bg);
+            color: var(--text-on-card);
+            padding: 1.5rem 2rem;
+            width: fit-content;
+            margin-bottom: 2rem;
+            transform: skewX(-10deg);
+            animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: var(--title-size);
+            line-height: 1.1;
+            max-width: 900px;
+            animation: fadeInUp 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+            text-transform: uppercase;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%) skewX(-10deg); opacity: 0; }
+            to { transform: translateX(0) skewX(-10deg); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(60px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="number">01</div>
+        <div class="card">
+            <p style="font-weight: 700; letter-spacing: 2px;">ให้ความรู้ทั่วไป</p>
+        </div>
+        <h1 class="title">เจาะลึกโลกของเกย์:<br>ความหลากหลายที่คุณอาจยังไม่รู้</h1>
+    </div>
+</body>
+</html>

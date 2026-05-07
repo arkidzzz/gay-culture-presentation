@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Cyber Preview</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Bai+Jamjuree:wght@400;600&display=swap');
+        :root {
+            --bg-dark: #0a0f1c;
+            --accent-cyan: #00ffcc;
+            --accent-magenta: #ff00aa;
+            --text-light: #ffffff;
+            --title-size: clamp(2rem, 6vw, 4rem);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Bai Jamjuree', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .canvas-bg {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+        }
+        .glitch-wrapper {
+            position: relative;
+        }
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: var(--title-size);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        .tagline {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            animation: fadeIn 1s 0.5s both;
+        }
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent-cyan);
+            animation: cornerPulse 2s infinite;
+        }
+        .tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+        .bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+        .br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 0, 170, 0.5)); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes cornerPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-bg"></div>
+    <div class="slide-content">
+        <div class="tl corner"></div><div class="tr corner"></div>
+        <div class="bl corner"></div><div class="br corner"></div>
+        <div class="glitch-wrapper">
+            <h1 class="title">เจาะลึกโลกของเกย์:<br>ความหลากหลายที่คุณอาจยังไม่รู้</h1>
+        </div>
+        <p class="tagline">FUTURE // DIVERSITY</p>
+    </div>
+</body>
+</html>

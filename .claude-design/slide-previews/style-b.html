@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Voltage Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0066ff;
+            --bg-dark: #1a1a2e;
+            --accent-neon: #d4ff00;
+            --text-light: #ffffff;
+            --title-size: clamp(2.5rem, 7vw, 4.5rem);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Syne', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+        .left-panel {
+            flex: 0 0 40%;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+            animation: expandLeft 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--bg-dark) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vw;
+            position: relative;
+        }
+        .badge {
+            background: var(--accent-neon);
+            color: var(--bg-dark);
+            padding: 0.5rem 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 2rem;
+            border-radius: 100px;
+            animation: bounceIn 0.6s 0.4s both;
+        }
+        .title {
+            font-size: var(--title-size);
+            line-height: 1;
+            text-transform: uppercase;
+            animation: revealText 0.8s 0.6s both;
+        }
+        .mono-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            margin-top: 2rem;
+            opacity: 0.6;
+        }
+        @keyframes expandLeft {
+            from { flex: 0 0 0%; }
+            to { flex: 0 0 40%; }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes revealText {
+            from { clip-path: inset(0 100% 0 0); }
+            to { clip-path: inset(0 0 0 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="left-panel"></div>
+    <div class="right-panel">
+        <div class="badge">ENERGY // 2026</div>
+        <h1 class="title">เจาะลึกโลกของเกย์:<br>ความหลากหลายที่คุณอาจยังไม่รู้</h1>
+        <p class="mono-text">PREVIEW STYLE B: CREATIVE VOLTAGE</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เจาะลึกโลกของเกย์: ความหลากหลายที่คุณอาจยังไม่รู้</title>
+
+    <!-- Fonts: Orbitron for Display, Bai Jamjuree for Thai Body Text -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Bai+Jamjuree:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (NEON CYBER THEME)
+           =========================================== */
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #0d1425;
+            --accent-cyan: #00ffcc;
+            --accent-magenta: #ff00aa;
+            --accent-yellow: #d4ff00;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Bai Jamjuree', sans-serif;
+
+            --title-size: clamp(2rem, 6vw, 4.5rem);
+            --h2-size: clamp(1.5rem, 4vw, 3rem);
+            --body-size: clamp(0.9rem, 1.5vw, 1.25rem);
+            
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(1rem, 3vw, 3rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.6s;
+        }
+
+        /* ===========================================
+           VIEWPORT FITTING & BASE STYLES
+           =========================================== */
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        /* Grid Background Effect */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--slide-padding);
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===========================================
+           ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .reveal:nth-child(3) { transition-delay: 0.3s; }
+        .reveal:nth-child(4) { transition-delay: 0.4s; }
+
+        /* ===========================================
+           UI COMPONENTS
+           =========================================== */
+        .title-main {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.3));
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            height: 2px;
+            flex: 1;
+            background: linear-gradient(to right, var(--accent-cyan), transparent);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            background: rgba(0, 255, 204, 0.05);
+            border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card img {
+            width: 100%;
+            height: 300px; /* Increased height for better visibility */
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.3); /* Dark backing for non-matching ratios */
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            box-shadow: inset 0 0 20px rgba(0, 255, 204, 0.1);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-magenta);
+            color: white;
+            font-size: 0.8rem;
+            font-family: var(--font-display);
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-magenta));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        /* Nav Dots */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--accent-cyan);
+            transform: scale(1.5);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Edit Mode UI */
+        .edit-hotzone {
+            position: fixed; top: 0; left: 0;
+            width: 80px; height: 80px;
+            z-index: 10000;
+            cursor: pointer;
+        }
+        .edit-toggle {
+            position: fixed; top: 20px; left: 20px;
+            background: var(--accent-magenta);
+            color: white;
+            border: none;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            font-size: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--accent-magenta);
+        }
+        .edit-toggle.show, .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        [contenteditable="true"] {
+            outline: 2px dashed var(--accent-cyan);
+            outline-offset: 4px;
+            padding: 4px;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .grid-container { grid-template-columns: 1fr; }
+            .nav-dots { display: none; }
+        }
+        /* ===========================================
+           PRINT STYLES (For PDF Generation)
+           =========================================== */
+        @media print {
+            @page {
+                margin: 0;
+                size: landscape;
+            }
+            html, body {
+                height: auto;
+                overflow: visible;
+                margin: 0;
+                padding: 0;
+            }
+            .slide {
+                height: 100vh !important; /* Forces each slide to fill one page height */
+                width: 100% !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                overflow: hidden !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                background: var(--bg-primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .slide-content {
+                width: 90% !important; /* Keep content slightly inside for safety */
+                max-width: 1200px;
+                margin: 0 auto !important;
+            }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            .progress-bar, .nav-dots, .edit-toggle, .edit-hotzone {
+                display: none !important;
+            }
+            .slide::before {
+                opacity: 0.05 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="edit-hotzone"></div>
+    <button class="edit-toggle" id="editToggle" title="โหมดแก้ไข (E)">✏️</button>
+
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- Slide 1: Title -->
+    <section class="slide" id="slide-1">
+        <div class="slide-content" style="text-align: center;">
+            <div class="badge reveal">STAY EDITION // X TRENDS</div>
+            <h1 class="title-main reveal">เจาะลึกโลกของเกย์</h1>
+            <p class="reveal" style="font-size: 1.5rem; letter-spacing: 4px; color: var(--accent-cyan); font-family: var(--font-display);">ฉบับอ้างอิงวัฒนธรรม X (Twitter)</p>
+            <p class="reveal" style="margin-top: 1rem; opacity: 0.5; font-size: 0.8rem;">*เนื้อหานี้ใช้ภาพประกอบเพื่อการศึกษาความหลากหลายทางสรีระและบุคลิกภาพ*</p>
+        </div>
+    </section>
+
+    <!-- Slide 2: Intro -->
+    <section class="slide" id="slide-2">
+        <div class="slide-content">
+            <h2 class="section-title reveal">ความหลากหลายคือสีสัน</h2>
+            <div class="card reveal" style="max-width: 800px;">
+                <p style="font-size: 1.2rem;">ในสังคมปัจจุบัน "เกย์" ไม่ได้ถูกจำกัดอยู่แค่ภาพลักษณ์เดียว แต่มีความหลากหลายทั้งในด้านกายภาพ นิสัย บทบาท และวัฒนธรรมย่อย</p>
+                <p style="margin-top: 1rem; color: var(--accent-magenta); font-weight: 600;">"การทำความเข้าใจความหลากหลาย คือจุดเริ่มต้นของการเคารพกันและกัน"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Physical Types -->
+    <section class="slide" id="slide-3">
+        <div class="slide-content">
+            <h2 class="section-title reveal">สายกายภาพ (สรีระ)</h2>
+            <div class="grid-container reveal">
+                <div class="card">
+                    <img src="picture/changbin.jpg" alt="Changbin">
+                    <h3>สายล่ำ/หมี (Muscle/Cub)</h3>
+                    <p>สรีระที่มีกล้ามเนื้อชัดเจนและดูแน่นหนาเหมือน Changbin ที่แฟนๆ X มักเรียกว่าสายกล้ามที่ดูอบอุ่น</p>
+                </div>
+                <div class="card">
+                    <img src="picture/felix.jpg" alt="Felix">
+                    <h3>สายลีน/เพรียว (Twink)</h3>
+                    <p>รูปร่างเพรียวบาง ใบหน้าดูอ่อนเยาว์และมีเสน่ห์แบบนุ่มนวลเหมือน Felix ที่ดูเหมือนหลุดออกมาจากเทพนิยาย</p>
+                </div>
+                <div class="card">
+                    <img src="picture/Bang Chan.jpg" alt="Bang Chan">
+                    <h3>สายกล้าม (Muscle/Jock)</h3>
+                    <p>เน้นความฟิตเฟิร์มและการดูแลตัวเองในยิมอย่างหนักแบบ Bang Chan ที่เป็นแรงบันดาลใจด้านสรีระ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Personality -->
+    <section class="slide" id="slide-4">
+        <div class="slide-content">
+            <h2 class="section-title reveal">สายบุคลิก</h2>
+            <div class="grid-container reveal" style="grid-template-columns: repeat(2, 1fr); align-items: start;">
+                <div class="card" style="padding: 1.5rem;">
+                    <div class="badge">MASC</div>
+                    <img src="picture/Lee Know _ _Run to you_ VIP Movie Premiere 250905.jpg" alt="Lee Know" style="height: auto; max-height: 40vh; width: 100%; object-fit: contain;">
+                    <h3>เกย์แมน (Masculine)</h3>
+                    <p>บุคลิกนิ่งๆ ดูเท่และมีความเป็นผู้ชายสูงแบบ Lee Know ที่ดูสุขุมแต่มีเสน่ห์</p>
+                </div>
+                <div class="card" style="padding: 1.5rem;">
+                    <div class="badge">QUEEN</div>
+                    <img src="picture/hyunjin.jpg" alt="Hyunjin" style="height: auto; max-height: 40vh; width: 100%; object-fit: contain;">
+                    <h3>ตัวแม่/เกย์ควีน (Queen)</h3>
+                    <p>เน้นการแสดงออกที่ทรงพลัง มีจริตที่สวยงามและแฟชั่นที่จัดเต็มเหมือน Hyunjin ที่เป็น Visual ตัวท็อป</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Roles -->
+    <section class="slide" id="slide-5">
+        <div class="slide-content">
+            <h2 class="section-title reveal">สายบทบาท (Sexual Roles)</h2>
+            <div class="grid-container reveal" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card" style="text-align: center;">
+                    <img src="picture/seungmin.jpg" alt="Seungmin" style="height: 300px; width: 100%; object-fit: contain;">
+                    <h3 style="color: var(--accent-magenta);">รุก (Top)</h3>
+                    <p>ฝ่ายปฏิบัติการ</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <img src="picture/Jeongin.jpg" alt="Jeongin" style="height: 300px; width: 100%; object-fit: contain;">
+                    <h3 style="color: var(--accent-cyan);">รับ (Bottom)</h3>
+                    <p>ฝ่ายตั้งรับ</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <img src="picture/HAN.jpg" alt="HAN" style="height: 300px; width: 100%; object-fit: contain;">
+                    <h3 style="color: var(--accent-yellow);">โบ๊ท (Vers)</h3>
+                    <p>ได้ทั้งรุกและรับ</p>
+                </div>
+            </div>
+            <p class="reveal" style="margin-top: 2rem; text-align: center; opacity: 0.6;">* หมายเหตุ: บทบาทเหล่านี้เป็นความชอบส่วนบุคคล และไม่สามารถกำหนดนิสัยภายนอกได้</p>
+        </div>
+    </section>
+
+    <!-- Slide 6: Daddy -->
+    <section class="slide" id="slide-6">
+        <div class="slide-content">
+            <h2 class="section-title reveal">สายรุ่นใหญ่</h2>
+            <div class="grid-container reveal">
+                <div class="card" style="display: flex; align-items: center; gap: 2rem;">
+                    <img src="picture/Bang Chan.jpg" alt="Bang Chan" style="width: 300px; height: 400px; object-fit: contain;">
+                    <div>
+                        <h3>แด๊ดดี้ (Daddy)</h3>
+                        <p>ผู้ใหญ่ที่มีวุฒิภาวะ ดูแลน้องๆ และคนรอบข้างได้ดีเยี่ยมแบบ Bang Chan ที่เป็นผู้นำวงและมี Vibe ความเป็นผู้ใหญ่สูงมากจนแฟนคลับใน X มักเรียกกันติดปาก</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Culture -->
+    <section class="slide" id="slide-7">
+        <div class="slide-content">
+            <h2 class="section-title reveal">วัฒนธรรมเฉพาะกลุ่ม</h2>
+            <div class="grid-container reveal">
+                <div class="card">
+                    <h3>Drag Culture</h3>
+                    <p>ศิลปะการแต่งหน้าและแต่งกายเพื่อการแสดงที่ทรงพลัง เน้นความคิดสร้างสรรค์และการจิกกัดล้อเลียน</p>
+                </div>
+                <div class="card">
+                    <h3>Kink/Leather</h3>
+                    <p>กลุ่มที่มีความสนใจหรือความชอบเฉพาะทางในเรื่องเครื่องแต่งกายหนังหรือกิจกรรมเฉพาะกลุ่มที่มีประวัติศาสตร์ยาวนาน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Conclusion -->
+    <section class="slide" id="slide-8">
+        <div class="slide-content" style="text-align: center;">
+            <h2 class="reveal" style="font-family: var(--font-display); font-size: 3rem; color: var(--accent-cyan);">BEYOND LABELS</h2>
+            <div class="card reveal" style="margin-top: 2rem; border: none; background: transparent;">
+                <p style="font-size: 1.5rem; line-height: 2;">ไม่ว่าเราจะเป็นประเภทไหน หรือเลือกป้ายกำกับอะไรให้ตัวเอง <br>สิ่งที่สำคัญที่สุดคือ **"การเป็นตัวของตัวเอง"** <br>และให้เกียรติในความแตกต่างของผู้อื่น</p>
+                <h3 style="margin-top: 3rem; color: var(--accent-magenta);">ขอบคุณครับ</h3>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.navDots = document.getElementById('navDots');
+                this.progressBar = document.getElementById('progressBar');
+                this.currentSlide = 0;
+                this.isScrolling = false;
+
+                this.init();
+            }
+
+            init() {
+                this.createDots();
+                this.setupObserver();
+                this.setupNav();
+                this.setupWheelNav();
+                this.handleScroll();
+            }
+
+            createDots() {
+                this.slides.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot' + (i === 0 ? ' active' : '');
+                    dot.addEventListener('click', () => {
+                        this.slides[i].scrollIntoView({ behavior: 'smooth' });
+                    });
+                    this.navDots.appendChild(dot);
+                });
+            }
+
+            setupObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index; // Update current index
+                            this.updateDots(index);
+                            this.updateProgress(index);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            updateDots(index) {
+                document.querySelectorAll('.dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            updateProgress(index) {
+                const progress = ((index + 1) / this.slides.length) * 100;
+                this.progressBar.style.width = progress + '%';
+            }
+
+            setupNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (document.activeElement.contentEditable === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'ArrowRight') {
+                        this.navigate(1);
+                    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                        this.navigate(-1);
+                    }
+                });
+            }
+
+            setupWheelNav() {
+                window.addEventListener('wheel', (e) => {
+                    if (this.isScrolling) return;
+                    
+                    if (Math.abs(e.deltaY) > 30) { // Threshold for scroll intent
+                        this.isScrolling = true;
+                        this.navigate(e.deltaY > 0 ? 1 : -1);
+                        
+                        // Cooldown to prevent multi-slide skipping
+                        setTimeout(() => {
+                            this.isScrolling = false;
+                        }, 800);
+                    }
+                }, { passive: false });
+            }
+
+            navigate(dir) {
+                const next = Math.min(Math.max(0, this.currentSlide + dir), this.slides.length - 1);
+                this.slides[next].scrollIntoView({ behavior: 'smooth' });
+            }
+
+            handleScroll() {
+                window.addEventListener('scroll', () => {
+                    const scrollPos = window.scrollY;
+                    const index = Math.round(scrollPos / window.innerHeight);
+                    this.currentSlide = index;
+                });
+            }
+        }
+
+        // Inline Editor Module
+        const Editor = {
+            isActive: false,
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                const toggle = document.getElementById('editToggle');
+                toggle.classList.toggle('active', this.isActive);
+                toggle.textContent = this.isActive ? '✅' : '✏️';
+                
+                document.querySelectorAll('.reveal, p, h1, h2, h3').forEach(el => {
+                    if (el.children.length === 0 || el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
+                        el.contentEditable = this.isActive;
+                    }
+                });
+
+                if (!this.isActive) {
+                    this.save();
+                }
+            },
+            save() {
+                localStorage.setItem('presentation_content', document.body.innerHTML);
+                console.log('Content saved to localStorage');
+            }
+        };
+
+        // Hotzone logic
+        const hotzone = document.querySelector('.edit-hotzone');
+        const editToggle = document.getElementById('editToggle');
+        let hideTimeout = null;
+
+        hotzone.addEventListener('mouseenter', () => {
+            clearTimeout(hideTimeout);
+            editToggle.classList.add('show');
+        });
+        hotzone.addEventListener('mouseleave', () => {
+            hideTimeout = setTimeout(() => {
+                if (!Editor.isActive) editToggle.classList.remove('show');
+            }, 400);
+        });
+        editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+        editToggle.addEventListener('mouseleave', () => {
+            hideTimeout = setTimeout(() => {
+                if (!Editor.isActive) editToggle.classList.remove('show');
+            }, 400);
+        });
+        editToggle.addEventListener('click', () => Editor.toggleEditMode());
+        hotzone.addEventListener('click', () => Editor.toggleEditMode());
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.key === 'e' || e.key === 'E') && document.activeElement.contentEditable !== 'true') {
+                Editor.toggleEditMode();
+            }
+        });
+
+        // Initialize Presentation
+        window.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>
